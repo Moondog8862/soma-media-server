@@ -7,7 +7,9 @@ MKDIR=/bin/mkdir
 
 # Creating soma-script-and-backup-folder
 SOMA_BASE=/var/lib/soma
+# rm -rf $SOMA_BASE
 $MKDIR -p $SOMA_BASE/backup
+$MKDIR -p $SOMA_BASE/config
 
 # Installer Logfile
 LOG=soma-install.log
@@ -22,6 +24,7 @@ apt install -y snap snapd
 snap install tvheadend
 
 # Install configs
+cd $SOMA_BASE/config
 $CP hostapd/* /etc/hostapd/
 $CP netplan/01-netcfg.yaml /etc/netplan/
 $CP dnsmasq/dnsmasq.conf /etc/
