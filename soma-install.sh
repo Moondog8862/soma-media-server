@@ -36,6 +36,8 @@ exportfs -ra
 $CP sysctl.conf /etc/
 $CP 90-dvb-adapter.rules /etc/udev/rules.d/
 $CP somastart $SOMA_BASE
+ln -s $SOMA_BASE/somastart /usr/bin/soma
+chmod +x $SOMA_BASE/somastart
 
 echo "Initializing SOMA-Installer Logfile in install directory." > $LOG
 
