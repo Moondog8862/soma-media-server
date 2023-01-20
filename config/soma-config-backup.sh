@@ -1,8 +1,12 @@
 #!/bin/sh
-#####################
-# SOMA Backup
-#####################
+##########################################################################
+# SOMA Installer - Small Office Media Appliance
+# Feedback and support please directly on github on the project site
+# https://github.com/Moondog8862/soma-media-server
+# Thanks, Adrian a.schmid@pm.me
+##########################################################################
 CP=/bin/cp
+MKDIR=/bin/mkdir
 
 DATE=$(/bin/date +%Y-%m-%d-week%w)
 
@@ -30,6 +34,8 @@ $CP /etc/sysctl.conf ./
 $CP /etc/udev/rules.d/90-dvb-adapter.rules ./
 
 # ONLY BACKUP
+$MKDIR $SOMA_BASE/config/backup-only
+cd $SOMA_BASE/config/backup-only
 $CP /etc/ssh/sshd_config ./
 $CP /etc/resolv.conf ./
 $CP /etc/hosts ./
