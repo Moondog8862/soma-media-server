@@ -1,0 +1,82 @@
+#!/bin/sh
+#### Startsript for SOMA Server
+#### SOMA = Small office Media applicance
+# script-and-backup-folder
+SOMA_BASE=/var/lib/soma
+
+# Sometimes ethernet link fails to assign corrrect ip address
+# enp3s0
+netplan generate
+sleep 10
+netplan apply
+echo "--------------------- somastart NETPLAN REFRESH" >> /var/log/syslog
+
+# FIREWALL RULES
+# https://www.vultr.com/docs/how-to-configure-uncomplicated-firewall-ufw-on-ubuntu-20-04-67187/https://www.vultr.com/docs/how-to-configure-uncomplicated-firewall-ufw-on-ubuntu-20-04-67187/
+#
+#sudo ufw allow bootps
+####### Without the above rule, dhcp from dnsmasq does not work!
+# THIS IS DONE IN FILE /etc/ufw/before.rules !!
+#sudo ufw allow 80/tcp
+#sudo ufw allow 53/udp
+#sudo ufw allow 443/tcp
+########################################################################
+# THIS IS DONE IN FILE /etc/ufw/before.rules !!
+#iptables -t nat -A POSTROUTING -o enp0s20u4u3 -j MASQUERADE
+#iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+#iptables -A FORWARD -i wlp4s0 -o enp0s20u4u3 -j ACCEPT
+#/etc/init.d/hostapd start
+#iptables -t nat -A POSTROUTING -s 10.1.1.0/24 ! -d 10.1.1.0/24  -j MASQUERADE
+sleep 100
+echo "---------------------- somastart INIT" >> /var/log/syslog
+/usr/sbin/ufw reload
+#sleep 150
+#ufw disable; sleep 10; ufw enable
+#ufw reload
+
+# set tvheadend backend
+BASE=/home/adi/scripts/soma-config
+$BASE/admin/checkdvb.sh
+
+# Syslog message
+# netlink: 'hostapd': attribute type 213 has an invalid length
+# Check if following fix is ok
+#modprobe rtl8192ce ant_sel=1
+
+# FW/UFW DNS ERROR
+# [UFW BLOCK] IN=enp3s0 OUT= MAC=e0:3f:49:81:af:13:00:50:b6:d7:fd:9e:08:00 SRC=10.0.50.122
+# DST=10.0.50.1 LEN=57 TOS=0x00 PREC=0x00 TTL=128 ID=5574 PROTO=UDP SPT=62515 DPT=53
+#ufw allow 53/tcp comment "allow dns requests"
+#ufw allow 53/udp comment "allow dns requests"
+# check
+# ufw status | grep dns
+# 53/udp                     ALLOW       Anywhere
+# 53/tcp                     ALLOW       Anywhere 
+
+# DHCP Server allowed ports
+# Add to rc.local for running on startup
+# Add other Firewall rules
+#ufw allow 67/udp comment "allow dhcp-server respones"
+#ufw allow 68/udp comment "allow dhcp-server respones"
+# check
+# ufw status | grep dhcp
+# 53/udp                     ALLOW       Anywhere
+# 53/tcp                     ALLOW       Anywhere
+#echo "Firewall rules added...." >> /var/log/syslog
+
+# Set LAN Interface
+#sleep 10; netplan generate; sleep 10; netplan apply
+#echo "LAN Interface refreshed...." >> /var/log/syslog
+#sleep 10
+#route del -net 10.0.0.0/24 enp3s0
+
+# Refresh FW Rules
+#ufw disable; sleep 20; ufw enable
+#echo "Firewall refreshed...." >> /var/log/syslog
+
+# Create AP-Backup
+SOMA_BASE/soma-config-backup.sh
+ls -l SOMA_BASE/backup-config/current >> /var/log/syslog
+
+echo "################## somastart FINISHED" >> /var/log/syslog
+

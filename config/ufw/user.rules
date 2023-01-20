@@ -1,0 +1,153 @@
+*filter
+:ufw-user-input - [0:0]
+:ufw-user-output - [0:0]
+:ufw-user-forward - [0:0]
+:ufw-before-logging-input - [0:0]
+:ufw-before-logging-output - [0:0]
+:ufw-before-logging-forward - [0:0]
+:ufw-user-logging-input - [0:0]
+:ufw-user-logging-output - [0:0]
+:ufw-user-logging-forward - [0:0]
+:ufw-after-logging-input - [0:0]
+:ufw-after-logging-output - [0:0]
+:ufw-after-logging-forward - [0:0]
+:ufw-logging-deny - [0:0]
+:ufw-logging-allow - [0:0]
+:ufw-user-limit - [0:0]
+:ufw-user-limit-accept - [0:0]
+### RULES ###
+
+### tuple ### allow any 4713 0.0.0.0/0 any 10.220.166.0/24 in
+-A ufw-user-input -p tcp --dport 4713 -s 10.220.166.0/24 -j ACCEPT
+-A ufw-user-input -p udp --dport 4713 -s 10.220.166.0/24 -j ACCEPT
+
+### tuple ### allow tcp 8443 0.0.0.0/0 any 0.0.0.0/0 in
+-A ufw-user-input -p tcp --dport 8443 -j ACCEPT
+
+### tuple ### allow any 53 0.0.0.0/0 any 0.0.0.0/0 in
+-A ufw-user-input -p tcp --dport 53 -j ACCEPT
+-A ufw-user-input -p udp --dport 53 -j ACCEPT
+
+### tuple ### allow udp 67 0.0.0.0/0 any 0.0.0.0/0 in comment=616c6c6f7720646863702d73657276657220726573706f6e6573
+-A ufw-user-input -p udp --dport 67 -j ACCEPT
+
+### tuple ### deny tcp 22 0.0.0.0/0 any 0.0.0.0/0 in
+-A ufw-user-input -p tcp --dport 22 -j DROP
+
+### tuple ### allow udp 68 0.0.0.0/0 any 0.0.0.0/0 in comment=616c6c6f7720646863702d73657276657220726573706f6e6573
+-A ufw-user-input -p udp --dport 68 -j ACCEPT
+
+### tuple ### allow udp 53 0.0.0.0/0 any 0.0.0.0/0 in
+-A ufw-user-input -p udp --dport 53 -j ACCEPT
+
+### tuple ### allow tcp 9981 0.0.0.0/0 any 0.0.0.0/0 in comment=547668656164656e64206c616e2073747265616d696e67
+-A ufw-user-input -p tcp --dport 9981 -j ACCEPT
+
+### tuple ### allow_log tcp 4773 0.0.0.0/0 any 0.0.0.0/0 in
+-A ufw-user-logging-input -p tcp --dport 4773 -m conntrack --ctstate NEW -m limit --limit 3/min --limit-burst 10 -j LOG --log-prefix "[UFW ALLOW] "
+-A ufw-user-logging-input -p tcp --dport 4773 -j RETURN
+-A ufw-user-input -p tcp --dport 4773 -j ufw-user-logging-input
+-A ufw-user-input -p tcp --dport 4773 -j ACCEPT
+
+### tuple ### allow tcp 80 0.0.0.0/0 any 0.0.0.0/0 in
+-A ufw-user-input -p tcp --dport 80 -j ACCEPT
+
+### tuple ### allow tcp 443 0.0.0.0/0 any 0.0.0.0/0 in
+-A ufw-user-input -p tcp --dport 443 -j ACCEPT
+
+### tuple ### allow udp 137 0.0.0.0/0 any 0.0.0.0/0 in comment=53616d626120736572766572202d204e455442494f53204e616d652053657276696365
+-A ufw-user-input -p udp --dport 137 -j ACCEPT
+
+### tuple ### allow tcp 137 0.0.0.0/0 any 0.0.0.0/0 in comment=53616d626120736572766572202d204e455442494f53204e616d652053657276696365
+-A ufw-user-input -p tcp --dport 137 -j ACCEPT
+
+### tuple ### allow udp 138 0.0.0.0/0 any 0.0.0.0/0 in comment=53616d626120736572766572202d204e455442494f5320446174616772616d2053657276696365
+-A ufw-user-input -p udp --dport 138 -j ACCEPT
+
+### tuple ### allow tcp 138 0.0.0.0/0 any 0.0.0.0/0 in comment=53616d626120736572766572202d204e455442494f5320446174616772616d2053657276696365
+-A ufw-user-input -p tcp --dport 138 -j ACCEPT
+
+### tuple ### allow udp 139 0.0.0.0/0 any 0.0.0.0/0 in comment=53616d626120736572766572202d204e455442494f532073657373696f6e2073657276696365
+-A ufw-user-input -p udp --dport 139 -j ACCEPT
+
+### tuple ### allow tcp 139 0.0.0.0/0 any 0.0.0.0/0 in comment=53616d626120736572766572202d204e455442494f532073657373696f6e2073657276696365
+-A ufw-user-input -p tcp --dport 139 -j ACCEPT
+
+### tuple ### allow tcp 445 0.0.0.0/0 any 0.0.0.0/0 in comment=53616d626120736572766572202d206d6963726f736f66742d6473
+-A ufw-user-input -p tcp --dport 445 -j ACCEPT
+
+### tuple ### allow tcp 9982 0.0.0.0/0 any 0.0.0.0/0 in comment=547668656164656e6420687473702073747265616d696e67
+-A ufw-user-input -p tcp --dport 9982 -j ACCEPT
+
+### tuple ### allow tcp 631 0.0.0.0/0 any 10.0.50.0/24 in
+-A ufw-user-input -p tcp --dport 631 -s 10.0.50.0/24 -j ACCEPT
+
+### tuple ### allow any 631 0.0.0.0/0 any 10.0.0.0/24 in
+-A ufw-user-input -p tcp --dport 631 -s 10.0.0.0/24 -j ACCEPT
+-A ufw-user-input -p udp --dport 631 -s 10.0.0.0/24 -j ACCEPT
+
+### tuple ### allow tcp 25 0.0.0.0/0 any 0.0.0.0/0 in comment=616c6c6f7720736d7470
+-A ufw-user-input -p tcp --dport 25 -j ACCEPT
+
+### tuple ### allow any 7251 0.0.0.0/0 any 10.0.0.0/24 in
+-A ufw-user-input -p tcp --dport 7251 -s 10.0.0.0/24 -j ACCEPT
+-A ufw-user-input -p udp --dport 7251 -s 10.0.0.0/24 -j ACCEPT
+
+### tuple ### allow tcp 8080 0.0.0.0/0 any 0.0.0.0/0 in comment=4b6f726520636f6e74726f6c20666f72204b6f6469
+-A ufw-user-input -p tcp --dport 8080 -j ACCEPT
+
+### tuple ### allow any 4000 0.0.0.0/0 any 10.0.50.0/24 in comment=4e46532073746174642073657276696365
+-A ufw-user-input -p tcp --dport 4000 -s 10.0.50.0/24 -j ACCEPT
+-A ufw-user-input -p udp --dport 4000 -s 10.0.50.0/24 -j ACCEPT
+
+### tuple ### allow any 4001 0.0.0.0/0 any 10.0.50.0/24 in comment=4e4653206c6f636b642073657276696365
+-A ufw-user-input -p tcp --dport 4001 -s 10.0.50.0/24 -j ACCEPT
+-A ufw-user-input -p udp --dport 4001 -s 10.0.50.0/24 -j ACCEPT
+
+### tuple ### allow any 4002 0.0.0.0/0 any 10.0.50.0/24 in comment=4e4653206d6f756e74642073657276696365
+-A ufw-user-input -p tcp --dport 4002 -s 10.0.50.0/24 -j ACCEPT
+-A ufw-user-input -p udp --dport 4002 -s 10.0.50.0/24 -j ACCEPT
+
+### tuple ### allow any 111 0.0.0.0/0 any 10.0.50.0/24 in comment=506f72746d61707065722073657276696365
+-A ufw-user-input -p tcp --dport 111 -s 10.0.50.0/24 -j ACCEPT
+-A ufw-user-input -p udp --dport 111 -s 10.0.50.0/24 -j ACCEPT
+
+### tuple ### allow any 2049 0.0.0.0/0 any 10.0.50.0/24 in comment=4e46532073657276696365
+-A ufw-user-input -p tcp --dport 2049 -s 10.0.50.0/24 -j ACCEPT
+-A ufw-user-input -p udp --dport 2049 -s 10.0.50.0/24 -j ACCEPT
+
+### tuple ### allow any 1771 10.0.50.1 any 10.0.50.0/24 in
+-A ufw-user-input -p tcp -d 10.0.50.1 --dport 1771 -s 10.0.50.0/24 -j ACCEPT
+-A ufw-user-input -p udp -d 10.0.50.1 --dport 1771 -s 10.0.50.0/24 -j ACCEPT
+
+### tuple ### allow any 2049 0.0.0.0/0 any 10.0.0.0/24 in comment=4e46532073657276696365
+-A ufw-user-input -p tcp --dport 2049 -s 10.0.0.0/24 -j ACCEPT
+-A ufw-user-input -p udp --dport 2049 -s 10.0.0.0/24 -j ACCEPT
+
+### tuple ### allow any 2222 10.220.50.216 any 10.0.50.0/24 in
+-A ufw-user-input -p tcp -d 10.220.50.216 --dport 2222 -s 10.0.50.0/24 -j ACCEPT
+-A ufw-user-input -p udp -d 10.220.50.216 --dport 2222 -s 10.0.50.0/24 -j ACCEPT
+
+### tuple ### allow any 2222 10.0.50.1 any 10.0.50.0/24 in
+-A ufw-user-input -p tcp -d 10.0.50.1 --dport 2222 -s 10.0.50.0/24 -j ACCEPT
+-A ufw-user-input -p udp -d 10.0.50.1 --dport 2222 -s 10.0.50.0/24 -j ACCEPT
+
+### tuple ### allow any 2222 10.0.50.1 any 10.0.0.0/24 in
+-A ufw-user-input -p tcp -d 10.0.50.1 --dport 2222 -s 10.0.0.0/24 -j ACCEPT
+-A ufw-user-input -p udp -d 10.0.50.1 --dport 2222 -s 10.0.0.0/24 -j ACCEPT
+
+### END RULES ###
+
+### LOGGING ###
+-A ufw-after-logging-input -j LOG --log-prefix "[UFW BLOCK] " -m limit --limit 3/min --limit-burst 10
+-I ufw-logging-deny -m conntrack --ctstate INVALID -j RETURN -m limit --limit 3/min --limit-burst 10
+-A ufw-logging-deny -j LOG --log-prefix "[UFW BLOCK] " -m limit --limit 3/min --limit-burst 10
+-A ufw-logging-allow -j LOG --log-prefix "[UFW ALLOW] " -m limit --limit 3/min --limit-burst 10
+### END LOGGING ###
+
+### RATE LIMITING ###
+-A ufw-user-limit -m limit --limit 3/minute -j LOG --log-prefix "[UFW LIMIT BLOCK] "
+-A ufw-user-limit -j REJECT
+-A ufw-user-limit-accept -j ACCEPT
+### END RATE LIMITING ###
+COMMIT

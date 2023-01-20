@@ -1,0 +1,1 @@
+ACTION=="add", SUBSYSTEM=="usb", ATTRS{product}=="soloHD", RUN+="/bin/chown hts.video /dev/dvb/adapter0"
