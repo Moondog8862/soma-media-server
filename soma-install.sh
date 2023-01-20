@@ -12,7 +12,7 @@ MKDIR=/bin/mkdir
 SOMA_BASE=/var/lib/soma
 # rm -rf $SOMA_BASE
 $MKDIR -p $SOMA_BASE/backup
-$MKDIR -p $SOMA_BASE/config
+$MKDIR -p $SOMA_BASE/config/admin
 
 # Installer Logfile
 LOG=soma-install.log
@@ -51,7 +51,7 @@ $CP somastart $SOMA_BASE
 ln -s $SOMA_BASE/somastart /usr/bin/somastart
 chmod +x $SOMA_BASE/somastart
 $CP soma-config-backup.sh $SOMA_BASE
-$CP admin/checkdvb.sh $SOMA_BASE
+$CP admin/checkdvb.sh $SOMA_BASEadmin/
 
 echo "Initializing SOMA-Installer Logfile in install directory." > $LOG
 
