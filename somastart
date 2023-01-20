@@ -1,7 +1,7 @@
 #!/bin/sh
 #### Startsript for SOMA Server
 #### SOMA = Small office Media applicance
-SOMA_HOME=.
+SOMA_HOME=soma-media-server
 
 # Sometimes ethernet link fails to assign corrrect ip address
 # enp3s0
@@ -74,7 +74,7 @@ $BASE/admin/checkdvb.sh
 #echo "Firewall refreshed...." >> /var/log/syslog
 
 # Create AP-Backup
-$SOMA_HOME/backup-config/backup.sh
+$SOMA_HOME/soma-config-backup.sh
 ls -l $SOMA_HOME/backup-config/current >> /var/log/syslog
 
 echo "################## somastart FINISHED" >> /var/log/syslog
