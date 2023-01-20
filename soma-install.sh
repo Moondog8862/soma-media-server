@@ -7,7 +7,7 @@ MKDIR=/bin/mkdir
 
 # Creating soma-script-and-backup-folder
 SOMA_BASE=/var/lib/soma
-$MKDIR $SOMA_BASE
+$MKDIR -p $SOMA_BASE/backup
 
 # Installer Logfile
 LOG=soma-install.log
