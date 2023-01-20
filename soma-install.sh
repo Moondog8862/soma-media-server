@@ -1,7 +1,10 @@
 #!/bin/sh
-#####################
-# SOMA Installer
-#####################
+##########################################################################
+# SOMA Installer - Small Office Media Appliance
+# Feedback and support please directly on github on the project site
+# https://github.com/Moondog8862/soma-media-server
+# Thanks, Adrian a.schmid@pm.me
+##########################################################################
 CP=/bin/cp
 MKDIR=/bin/mkdir
 
@@ -47,6 +50,7 @@ $CP 90-dvb-adapter.rules /etc/udev/rules.d/
 $CP somastart $SOMA_BASE
 ln -s $SOMA_BASE/somastart /usr/bin/somastart
 chmod +x $SOMA_BASE/somastart
+$CP soma-config-backup.sh $SOMA_BASE
 
 echo "Initializing SOMA-Installer Logfile in install directory." > $LOG
 
