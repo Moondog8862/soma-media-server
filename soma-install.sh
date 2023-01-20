@@ -3,6 +3,11 @@
 # SOMA Installer
 #####################
 CP=/bin/cp
+MKDIR=/bin/mkdir
+
+# Creating soma-base
+SOMA_BASE=/var/lib/soma
+$MKDIR $SOMA_BASE
 
 # Installer Logfile
 LOG=soma-install.log
@@ -28,7 +33,7 @@ $CP smb/smb.conf /etc/samba/
 $CP tvheadend/tvheadend /etc/init.d/ 
 $CP nfs/exports /etc/
 exportfs -ra
-$CP somastart /usr/bin
+$CP somastart $SOMA_BASE
 $CP sysctl.conf /etc/
 $CP 90-dvb-adapter.rules /etc/udev/rules.d/
 
