@@ -1,11 +1,22 @@
-#!/bin/bash
+#!/bin/sh
+##########################################################################
+# SOMA Installer - Small Office Media Appliance
+# Feedback and support please directly on github on the project site
+# https://github.com/Moondog8862/soma-media-server
+# Thanks, Adrian a.schmid@pm.me
+##########################################################################
+CP=/bin/cp
+MKDIR=/bin/mkdir
+
+# Creating soma-script-and-backup-folder
+SOMA_BASE=/var/lib/soma
 
 # Debug command
 #chown -R root.root /dev/dvb/adapter0
 dvbpath=/dev/dvb/adapter0
 dvbgroup=$(ls -ld /dev/dvb/adapter0 | awk '{print $4}')
 dvbuser=$(ls -ld /dev/dvb/adapter0 | awk '{print $4}')
-LOGFILE=/home/adi/scripts/logs/log-tvheadend-checkdvb.log
+LOGFILE=$SOMA_BASE/log-tvheadend-checkdvb.log
 tvhbin=/usr/local/bin/tvheadend
 
 sleep 10
@@ -65,5 +76,5 @@ tail $LOGFILE
 #/usr/bin/kodi &
 #/usr/bin/kodi-standalone &
 #/sbin/start-stop-daemon -o --start \
-#  -u "adi" -g "adi" --chuid "adi:adi" -b --exec "$DAEMON"
+#  -u "USER" -g "USER" --chuid "USER:USER" -b --exec "$DAEMON"
 
