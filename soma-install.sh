@@ -25,6 +25,12 @@ snap install tvheadend
 
 # Install configs
 cd $SOMA_BASE/config
+echo "Please enter a name for your WiFi"
+read wifiname
+echo "Please enter a password for your WiFi"
+read wifipass
+# need to change the following with a sed replacement
+# interface= interface= ssid=
 $CP hostapd/* /etc/hostapd/
 $CP netplan/01-netcfg.yaml /etc/netplan/
 $CP dnsmasq/dnsmasq.conf /etc/
