@@ -39,12 +39,17 @@ exportfs -ra
 $CP sysctl.conf /etc/
 $CP 90-dvb-adapter.rules /etc/udev/rules.d/
 $CP somastart $SOMA_BASE
-ln -s $SOMA_BASE/somastart /usr/bin/soma
+ln -s $SOMA_BASE/somastart /usr/bin/somastart
 chmod +x $SOMA_BASE/somastart
 
 echo "Initializing SOMA-Installer Logfile in install directory." > $LOG
 
-# Install crontab job for starting soma-server
+# Install soma weekly backup job, check if crontab file is not patched
+if [ $(grep -c "tv-config-backup.sh" /etc/cron.weekly/) -eq 0 ]; then
+  echo "Creating crontab file for weekly TV-Backup" >> $LOG
+  $CP cron/tv-config-backup.sh /etc/cron.weekly/
+fi
+
 echo "Install soma startup job? Yes to install, enter to skip"
 
 # Install soma startup job, check if crontab file is not patched
