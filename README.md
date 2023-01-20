@@ -1,6 +1,10 @@
 # soma-media-server
 small office media server appliance SOMA
 
+Installs and configures a tv-tuner, mediaserver and file server with 2 networks (10.0.0.0/24 and 10.0.50.0/24)
+After setup, Kodi can be used on any device in the network to stream live-tv, movies and pictures from the central tvheadend server.
+
+
 Requirements
 
 OS (lsb_release -a)
