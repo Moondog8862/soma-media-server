@@ -5,7 +5,7 @@
 CP=/bin/cp
 MKDIR=/bin/mkdir
 
-# Creating soma-base
+# Creating soma-script-and-backup-folder
 SOMA_BASE=/var/lib/soma
 $MKDIR $SOMA_BASE
 
@@ -33,9 +33,9 @@ $CP smb/smb.conf /etc/samba/
 $CP tvheadend/tvheadend /etc/init.d/ 
 $CP nfs/exports /etc/
 exportfs -ra
-$CP somastart $SOMA_BASE
 $CP sysctl.conf /etc/
 $CP 90-dvb-adapter.rules /etc/udev/rules.d/
+$CP somastart $SOMA_BASE
 
 echo "Initializing SOMA-Installer Logfile in install directory." > $LOG
 
