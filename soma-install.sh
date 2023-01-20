@@ -56,8 +56,6 @@ if [ $(grep -c "tv-config-backup.sh" /etc/cron.weekly/) -eq 0 ]; then
   $CP cron/tv-config-backup.sh /etc/cron.weekly/
 fi
 
-echo "Install soma startup job? Yes to install, enter to skip"
-
 # Install soma startup job, check if crontab file is not patched
 if [ $(grep -c "somastart" /var/spool/cron/crontabs/root) -eq 0 ]; then
   echo "Patching crontab file for startup job" >> $LOG
