@@ -35,8 +35,7 @@ echo "---------------------- somastart INIT" >> /var/log/syslog
 #ufw reload
 
 # set tvheadend backend
-BASE=/home/adi/scripts/soma-config
-$BASE/admin/checkdvb.sh
+$SOMA_BASE/admin/checkdvb.sh
 
 # Syslog message
 # netlink: 'hostapd': attribute type 213 has an invalid length
