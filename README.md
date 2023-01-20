@@ -24,6 +24,10 @@ before.rules
 smb.conf
 change all occurences of USER variable with current user
 
+checkdvb.sh
+#/sbin/start-stop-daemon -o --start \
+#  -u "USER" -g "USER" --chuid "USER:USER" -b --exec "$DAEMON"
+
 ****************************
 
 Installs and configures a tv-tuner, mediaserver and file server with 2 networks (10.0.0.0/24 and 10.0.50.0/24)
