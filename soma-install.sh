@@ -70,28 +70,37 @@ $CP ufw/ufw /etc/default/
 CUSER=$(id -u -n)
 $CP smb/smb.conf smb/smb.tmp
 sed -i 's/USER/'$CUSER'/g' smb/smb.tmp
-$CP smb/smb.tmpp /etc/samba/
-
-$CP tvheadend/tvheadend /etc/init.d/ 
+$CP smb/smb.tmp /etc/samba/
 $CP nfs/exports /etc/
 exportfs -ra
 $CP sysctl.conf /etc/
+sysctl -p
+
+echo "Now Installing TVHeadend server..."
+TVUSER=hts
+TVGROUP=video
+/usr/sbin/useradd -m $TVUSER
+/usr/sbin/groupadd $TVGROUP
+$CP tvheadend/tvheadend /etc/init.d/ 
 $CP 90-dvb-adapter.rules /etc/udev/rules.d/
 $CP somastart $SOMA_BASE
 ln -s $SOMA_BASE/somastart /usr/bin/somastart
 chmod +x $SOMA_BASE/somastart
 $CP soma-config-backup.sh $SOMA_BASE
-$CP admin/checkdvb.sh $SOMA_BASEadmin/
+$CP admin/checkdvb.sh admin/checkdvb.tmp
+sed -i 's/USER/'$TVUSER'/g' admin/checkdvb.tmp
+sed -i 's/GROUP/'$TVGROUP'/g' admin/checkdvb.tmp
+$CP admin/checkdvb.tmp $SOMA_BASE/checkdvb.sh
 
-echo "Initializing SOMA-Installer Logfile in install directory." > $LOG
-
-# Install soma weekly backup job, check if crontab file is not patched
+echo "" > $LOG
+echo "Initializing SOMA-Installer Logfile in install directory." | tee $LOG
+echo "Install soma weekly backup job, check if crontab file is not patched" | tee $LOG
 if [ $(grep -c "tv-config-backup.sh" /etc/cron.weekly/) -eq 0 ]; then
   echo "Creating crontab file for weekly TV-Backup" >> $LOG
   $CP cron/tv-config-backup.sh /etc/cron.weekly/
 fi
 
-# Install soma startup job, check if crontab file is not patched
+echo "Install soma startup job, check if crontab file is not patched" | tee $LOG
 if [ $(grep -c "somastart" /var/spool/cron/crontabs/root) -eq 0 ]; then
   echo "Patching crontab file for startup job" >> $LOG
   echo "# Start soma server \n@reboot /usr/bin/somastart" >> /var/spool/cron/crontabs/root
@@ -108,12 +117,12 @@ fi
 # Antique code
 #cp rc.local /etc
 
-# Install samba default user, check if userfile is not patched
+echo "Install samba default user, check if userfile is not patched" | tee $LOG
 #if [ $(cat /etc/hosts | grep 10.0.0.1) == "" ]; then
 #  echo " " >> /etc/samba/smbpasswd
 #fi
 
-# Install dns entries, check if hosts file is not patched
+echo "Install dns entries, check if hosts file is not patched" | tee $LOG
 if [ $(grep -c "10.0.0.1" /etc/hosts) -eq 0 ]; then
   echo "Patching hosts file for dns entry of networks" >> $LOG
   echo "# Subnet addresses" >> /etc/hosts
@@ -130,6 +139,6 @@ netplan generate; netplan apply
 ufw reload
 
 # User Info
-echo "Done installing SOMA server. Access the tvheadend Webfrontend at: https://127.0.0.1:9981"
-echo "Done installing SOMA server. Access the tvheadend Webfrontend at: https://access.fiber.lan:9981"
-echo "Change passwords for default users. user Login: admin / admin"
+echo "Done installing SOMA server. Access the tvheadend Webfrontend at: https://127.0.0.1:9981" | tee $LOG
+echo "Done installing SOMA server. Access the tvheadend Webfrontend at: https://access.fiber.lan:9981" | tee $LOG
+echo "Change passwords for default users. user Login: admin / admin" | tee $LOG
