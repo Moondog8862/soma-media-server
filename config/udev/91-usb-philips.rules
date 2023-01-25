@@ -1,0 +1,1 @@
+ACTION=="add", SUBSYSTEM=="usb", ATTRS{product}=="Philips Audio Set", RUN+="/var/lib/soma/usb_pc_link"
