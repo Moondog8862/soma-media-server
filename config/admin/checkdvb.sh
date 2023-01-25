@@ -76,5 +76,5 @@ tail $LOGFILE
 #/usr/bin/kodi &
 #/usr/bin/kodi-standalone &
 #/sbin/start-stop-daemon -o --start \
-#  -u "USER" -g "USER" --chuid "USER:USER" -b --exec "$DAEMON"
+#  -u "USER" -g "GROUP" --chuid "USER:GROUP" -b --exec "$DAEMON"
 
