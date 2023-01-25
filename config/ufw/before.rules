@@ -78,9 +78,9 @@ COMMIT
 *nat
 :POSTROUTING ACCEPT [0:0]
 
-#Forward traffic from the alias range 10.0.0.xxx through enp0s20u4u3
--A POSTROUTING -s 10.0.0.0/24 -o enp0s20u1 -j MASQUERADE
--A POSTROUTING -s 10.0.50.0/24 -o enp0s20u1 -j MASQUERADE
+#Forward traffic from the alias range 10.0.0.xxx through intgw
+-A POSTROUTING -s 10.0.0.0/24 -o intgw -j MASQUERADE
+-A POSTROUTING -s 10.0.50.0/24 -o intgw -j MASQUERADE
 
 #iptables -t nat -A POSTROUTING -o $2 -j MASQUERADE
 #iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
