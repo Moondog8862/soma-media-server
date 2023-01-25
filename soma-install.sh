@@ -13,6 +13,7 @@ SOMA_BASE=/var/lib/soma
 # rm -rf $SOMA_BASE
 $MKDIR -p $SOMA_BASE/backup
 $MKDIR -p $SOMA_BASE/config/admin
+$MKDIR /opt/dnsmasq
 
 # Installer Logfile
 LOG=soma-install.log
@@ -26,6 +27,23 @@ echo "Installing tvheadend from snap store..."
 apt install -y snap snapd
 snap install tvheadend
 
+# Interactive Installer
+echo "Starting interactive installer. Here we will configure the base values for your system"
+echo "Primary Network Interface: Please enter the name of your interface for 4K TV streaming (ethernet or fastwifi/wifi6 network. Choose from available interfaces list.)"
+#ifconfig -a | sed 's/[ \t].*//;/^\(lo\|\)$/d'
+ip -o link show | awk -F ':' '{print $1 $2}'
+read int1
+cat << EOF
+Wireless Network Interface: Enter the name of your secondary interface used for small file transfer (Fileserver)
+and office internet (not voip/streaming/large file transfer).
+If you are not sure based on the output above it is usually the one mentioned in the following output (IEEE).
+EOF
+iwconfig
+read int2
+echo "Gateway Network Interface: Enter the name of the interface facing the internet, usually located on the line with the ip address in the router column."
+route -n
+read int3
+
 # Install configs
 cd $SOMA_BASE/config
 echo "Please enter a name for your WiFi"
@@ -36,7 +54,13 @@ read wifipass
 # interface= interface= ssid=
 $CP hostapd/* /etc/hostapd/
 $CP netplan/01-netcfg.yaml /etc/netplan/
-$CP dnsmasq/dnsmasq.conf /etc/
+$CP dnsmasq/dnsmasq.conf dnsmasq/dnsmasq.tmp
+sed -i 's/int4k/'$int1'/g' dnsmasq/dnsmasq.tmp
+sed -i 's/intwlan/'$int2'/g' dnsmasq/dnsmasq.tmp
+sed -i 's/intgw/'$int3'/g' dnsmasq/dnsmasq.tmp
+ipdns=$(route -n | grep 'UG[ \t]' | awk '{print $2}')
+sed -i 's/ipdns/'$ipdns'/g' dnsmasq/dnsmasq.tmp
+$CP dnsmasq/dnsmasq.tmp /etc/dnsmasq.conf
 $CP ufw/before.rules /etc/ufw/
 $CP ufw/user.rules /etc/ufw/
 $CP ufw/sysctl.conf /etc/ufw/
