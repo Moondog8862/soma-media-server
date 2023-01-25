@@ -61,11 +61,17 @@ sed -i 's/intgw/'$int3'/g' dnsmasq/dnsmasq.tmp
 ipdns=$(route -n | grep 'UG[ \t]' | awk '{print $2}')
 sed -i 's/ipdns/'$ipdns'/g' dnsmasq/dnsmasq.tmp
 $CP dnsmasq/dnsmasq.tmp /etc/dnsmasq.conf
-$CP ufw/before.rules /etc/ufw/
+$CP ufw/before.rules ufw/before.tmp
+sed -i 's/intgw/'$int3'/g' ufw/before.tmp
+$CP ufw/before.tmp /etc/ufw/before.rules
 $CP ufw/user.rules /etc/ufw/
 $CP ufw/sysctl.conf /etc/ufw/
 $CP ufw/ufw /etc/default/
-$CP smb/smb.conf /etc/samba/ 
+CUSER=$(id -u -n)
+$CP smb/smb.conf smb/smb.tmp
+sed -i 's/USER/'$CUSER'/g' smb/smb.tmp
+$CP smb/smb.tmpp /etc/samba/
+
 $CP tvheadend/tvheadend /etc/init.d/ 
 $CP nfs/exports /etc/
 exportfs -ra
