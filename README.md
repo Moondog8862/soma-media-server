@@ -31,6 +31,7 @@ For my installation, I used a Intel(R) Core(TM) i5-4570S CPU @ 2.90GHz with 4 co
 please report your experience.
 
 Installation
+
 git clone https://github.com/Moondog8862/soma-media-server
 
 cd soma-media-server
