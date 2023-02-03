@@ -136,6 +136,9 @@
 -A ufw-user-input -p tcp -d 10.0.50.1 --dport 2222 -s 10.0.0.0/24 -j ACCEPT
 -A ufw-user-input -p udp -d 10.0.50.1 --dport 2222 -s 10.0.0.0/24 -j ACCEPT
 
+### tuple ### allow tcp 853 0.0.0.0/0 any 0.0.0.0/0 in comment=616c6c6f7720656e6372797074656420646e73207265717565737473
+-A ufw-user-input -p tcp --dport 853 -j ACCEPT
+
 ### END RULES ###
 
 ### LOGGING ###
