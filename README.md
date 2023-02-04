@@ -7,20 +7,23 @@ After setup, Kodi can be used on any device in the network to stream live-tv, mo
 
 Requirements
 
-OS (lsb_release -a)
-
+OS
 Distributor ID:	elementary
 Description:	elementary OS 5.1.7 Hera
 Release:	5.1.7
 Codename:	hera
 
-means: Ubuntu bionic based (18.04)
+Based on: Ubuntu bionic based (18.04)
 
-TV-Tuner (lsusb -v)
+Check your OS: lsb_release -a
+
+TV-Tuner
 
 Bus 003 Device 006: ID 2040:8268 Hauppauge 
   iManufacturer           3 HCW
   iProduct                1 soloHD
+
+Check your tuner: lsusb -v
 
 Caution
 Please be careful to install on a configured system as it will overwrite existing IP addresses and networks with the new configuration.
