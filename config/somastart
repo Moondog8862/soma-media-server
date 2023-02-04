@@ -74,7 +74,7 @@ $SOMA_BASE/admin/checkdvb.sh
 #echo "Firewall refreshed...." >> /var/log/syslog
 
 # Create AP-Backup
-SOMA_BASE/soma-config-backup.sh
+$SOMA_BASE/soma-config-backup.sh
 ls -l SOMA_BASE/backup-config/current >> /var/log/syslog
 
 echo "################## somastart FINISHED" >> /var/log/syslog
