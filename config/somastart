@@ -1,15 +1,18 @@
 #!/bin/sh
 #### Startsript for SOMA Server
 #### SOMA = Small office Media applicance
-# script-and-backup-folder
+#### Feedback and comment please to a.schmid@pm.me
+
+# File locations
 SOMA_BASE=/var/lib/soma
+LOGFILE=$SOMA_BASE/soma.log
 
 # Sometimes ethernet link fails to assign corrrect ip address
 # enp3s0
 netplan generate
 sleep 10
 netplan apply
-echo "--------------------- somastart NETPLAN REFRESH" >> /var/log/syslog
+echo "--------------------- somastart NETPLAN REFRESH" >> $LOGFILE
 
 # FIREWALL RULES
 # https://www.vultr.com/docs/how-to-configure-uncomplicated-firewall-ufw-on-ubuntu-20-04-67187/https://www.vultr.com/docs/how-to-configure-uncomplicated-firewall-ufw-on-ubuntu-20-04-67187/
@@ -28,7 +31,7 @@ echo "--------------------- somastart NETPLAN REFRESH" >> /var/log/syslog
 #/etc/init.d/hostapd start
 #iptables -t nat -A POSTROUTING -s 10.1.1.0/24 ! -d 10.1.1.0/24  -j MASQUERADE
 sleep 100
-echo "---------------------- somastart INIT" >> /var/log/syslog
+echo "---------------------- somastart INIT" >> $LOGFILE
 /usr/sbin/ufw reload
 #sleep 150
 #ufw disable; sleep 10; ufw enable
@@ -61,21 +64,26 @@ $SOMA_BASE/admin/checkdvb.sh
 # ufw status | grep dhcp
 # 53/udp                     ALLOW       Anywhere
 # 53/tcp                     ALLOW       Anywhere
-#echo "Firewall rules added...." >> /var/log/syslog
+#echo "Firewall rules added...." >> $LOGFILE
 
-# Set LAN Interface
-#sleep 10; netplan generate; sleep 10; netplan apply
-#echo "LAN Interface refreshed...." >> /var/log/syslog
-#sleep 10
-#route del -net 10.0.0.0/24 enp3s0
+# Route configuration
+## UNSOLVED Unnecessary route is bein inserted blocking wifi traffic!
+### Check and debug where route is bein added rather than deleting it!
+# To avoid mobile clients not to be able to connect
+if [ $(route -n | grep -c "10.0.0.0") -gt 1 ]; then
+  echo "Deleting route for enp3s0 network..."
+  sudo route del -net 10.0.0.0/24 enp3s0
+else
+  echo "No route on enp3s0 to 10.0.0.0 - OK!"
+fi
 
 # Refresh FW Rules
 #ufw disable; sleep 20; ufw enable
-#echo "Firewall refreshed...." >> /var/log/syslog
+#echo "Firewall refreshed...." >> $LOGFILE
 
 # Create AP-Backup
 $SOMA_BASE/soma-config-backup.sh
-ls -l SOMA_BASE/backup-config/current >> /var/log/syslog
+ls -l SOMA_BASE/backup-config/current >> $LOGFILE
 
-echo "################## somastart FINISHED" >> /var/log/syslog
+echo "################## somastart FINISHED" >> $LOGFILE
 
