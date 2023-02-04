@@ -16,7 +16,7 @@ $MKDIR -p $SOMA_BASE/config/admin
 $MKDIR /opt/dnsmasq
 
 # Installer Logfile
-LOG=soma-install.log
+LOG=$SOMA_BASE/soma-install.log
 
 # Install needed packages for networking
 apt install -y hostapd netplan ufw samba
@@ -90,7 +90,7 @@ $CP soma-config-backup.sh $SOMA_BASE
 $CP admin/checkdvb.sh admin/checkdvb.tmp
 sed -i 's/USER/'$TVUSER'/g' admin/checkdvb.tmp
 sed -i 's/GROUP/'$TVGROUP'/g' admin/checkdvb.tmp
-$CP admin/checkdvb.tmp $SOMA_BASE/checkdvb.sh
+$CP admin/checkdvb.tmp $SOMA_BASE/admin/checkdvb.sh
 
 echo "" > $LOG
 echo "Initializing SOMA-Installer Logfile in install directory." | tee $LOG
