@@ -87,10 +87,12 @@ $CP somastart $SOMA_BASE
 ln -s $SOMA_BASE/somastart /usr/bin/somastart
 chmod +x $SOMA_BASE/somastart
 $CP soma-config-backup.sh $SOMA_BASE
+chmod +x $SOMA_BASE/soma-config-backup.sh
 $CP admin/checkdvb.sh admin/checkdvb.tmp
 sed -i 's/USER/'$TVUSER'/g' admin/checkdvb.tmp
 sed -i 's/GROUP/'$TVGROUP'/g' admin/checkdvb.tmp
 $CP admin/checkdvb.tmp $SOMA_BASE/admin/checkdvb.sh
+chmod +x $SOMA_BASE/admin/checkdvb.sh
 
 echo "" > $LOG
 echo "Initializing SOMA-Installer Logfile in install directory." | tee $LOG
