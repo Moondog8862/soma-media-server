@@ -8,15 +8,15 @@
 CP=/bin/cp
 MKDIR=/bin/mkdir
 
-# Creating soma-script-and-backup-folder
+# File locations
 SOMA_BASE=/var/lib/soma
+LOGFILE=$SOMA_BASE/log-tvheadend-checkdvb.log
 
 # Debug command
 #chown -R root.root /dev/dvb/adapter0
 dvbpath=/dev/dvb/adapter0
 dvbgroup=$(ls -ld /dev/dvb/adapter0 | awk '{print $4}')
 dvbuser=$(ls -ld /dev/dvb/adapter0 | awk '{print $4}')
-LOGFILE=$SOMA_BASE/log-tvheadend-checkdvb.log
 tvhbin=/usr/local/bin/tvheadend
 
 sleep 10
