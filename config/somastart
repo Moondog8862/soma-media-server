@@ -82,7 +82,7 @@ fi
 #echo "Firewall refreshed...." >> $LOGFILE
 
 # Create AP-Backup
-$SOMA_BASE/soma-config-backup.sh
+$SOMA_BASE/admin/soma-config-backup.sh
 ls -l $SOMA_BASE/admin/backup-config/current >> $LOGFILE
 
 echo "################## somastart FINISHED" >> $LOGFILE
