@@ -86,8 +86,8 @@ $CP 90-dvb-adapter.rules /etc/udev/rules.d/
 $CP somastart $SOMA_BASE
 ln -s $SOMA_BASE/somastart /usr/bin/somastart
 chmod +x $SOMA_BASE/somastart
-$CP soma-config-backup.sh $SOMA_BASE
-chmod +x $SOMA_BASE/soma-config-backup.sh
+$CP admin/soma-config-backup.sh $SOMA_BASE/admin
+chmod +x $SOMA_BASE/admin/soma-config-backup.sh
 $CP admin/checkdvb.sh admin/checkdvb.tmp
 sed -i 's/USER/'$TVUSER'/g' admin/checkdvb.tmp
 sed -i 's/GROUP/'$TVGROUP'/g' admin/checkdvb.tmp
