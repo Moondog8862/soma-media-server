@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 ##########################################################################
 # SOMA Installer - Small Office Media Appliance
 # Feedback and support please directly on github on the project site
