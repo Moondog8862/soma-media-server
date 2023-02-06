@@ -19,10 +19,21 @@ $MKDIR /opt/dnsmasq
 LOG=$SOMA_BASE/soma-install.log
 
 # Install needed packages for networking
-apt install -y hostapd netplan ufw samba
+apt install net-tools
+
+RELEASE=$(lsb_release -sr)
+case $RELEASE in
+ 22.04)
+   apt install -y netplan.io kodi-pvr-hts
+   ;;
+ 18.04)
+  apt install -y netplan kodi-pvr-tvheadend-hts
+  ;;
+esac
+apt install -y hostapd ufw samba
 apt install -y nfs-kernel-server nfs-common
 # Install Kodi as frontend
-apt install -y kodi kodi-pvr-tvheadend-hts kodi-pvr-hts
+apt install -y kodi
 echo "Installing tvheadend from snap store..."
 apt install -y snap snapd
 snap install tvheadend
@@ -45,7 +56,7 @@ route -n
 read int3
 
 # Install configs
-cd $SOMA_BASE/config
+cd ./config
 echo "Please enter a name for your WiFi"
 read wifiname
 echo "Please enter a password for your WiFi"
@@ -103,9 +114,13 @@ if [ $(grep -c "tv-config-backup.sh" /etc/cron.weekly/) -eq 0 ]; then
 fi
 
 echo "Install soma startup job, check if crontab file is not patched" | tee $LOG
-if [ $(grep -c "somastart" /var/spool/cron/crontabs/root) -eq 0 ]; then
+CRONTAB=/var/spool/cron/crontabs/root
+if [ $(! -f "$CRONTAB") ]; then
+  touch $CRONTAB
+fi
+if [ $(grep -c "somastart" $CRONTAB) -eq 0 ]; then
   echo "Patching crontab file for startup job" >> $LOG
-  echo "# Start soma server \n@reboot /usr/bin/somastart" >> /var/spool/cron/crontabs/root
+  echo "# Start soma server \n@reboot /usr/bin/somastart" >> $CRONTAB
 fi
 if [ $(! -d "/etc/rc5.d/S90somastart") ]; then
   ln -s /usr/bin/somastart /etc/rc0.d/S90somastart
@@ -134,9 +149,10 @@ fi
 
 # Restarting system services
 service smbd restart
-service tvheadend restart
-service dnsmasq restart
-service hostapd restart
+# service tvheadend restart
+# service dnsmasq restart
+# service hostapd restart
+
 netplan generate; netplan apply
 ufw reload
 
