@@ -2,18 +2,18 @@ network:
   version: 2
   renderer: networkd
   ethernets:
-    wlp4s0:
+    intwifi:
       dhcp4: no
       dhcp6: no
       addresses:
-        - 10.0.0.1/24
+        - 10.10.0.1/24
       nameservers:
         search: [access.wifi.lan]
         addresses: [127.0.0.1,intgw,208.67.222.222]
     int4k:
       dhcp4: no
       dhcp6: no
-      addresses: [ 10.0.50.1/24, 10.50.50.1/24 ]
+      addresses: [ 10.10.50.1/24, 10.50.50.1/24 ]
       nameservers:
               search: [access.fiber.lan]
               addresses: [127.0.0.1,intgw]
