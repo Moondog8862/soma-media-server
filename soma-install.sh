@@ -12,7 +12,7 @@ MKDIR=/bin/mkdir
 SOMA_BASE=/var/lib/soma
 # rm -rf $SOMA_BASE
 $MKDIR -p $SOMA_BASE/backup
-$MKDIR -p $SOMA_BASE/config/admin
+$MKDIR -p $SOMA_BASE/admin
 $MKDIR /opt/dnsmasq
 
 # Installer Logfile
@@ -54,6 +54,8 @@ read int2
 echo "Gateway Network Interface: Enter the name of the interface facing the internet, usually located on the line with the ip address in the router column."
 route -n
 read int3
+# Get ip accress from gateway interface
+int3gw=$(route -n | grep $int3 | grep UG | awk '{print $2}')
 
 # Install configs
 cd ./config
@@ -64,7 +66,12 @@ read wifipass
 # need to change the following with a sed replacement
 # interface= interface= ssid=
 $CP hostapd/* /etc/hostapd/
-$CP netplan/01-netcfg.yaml /etc/netplan/
+$CP netplan/01-netcfg.yaml netplan/01-netcfg.tmp
+sed -i 's/int4k/'$int1'/g' netplan/01-netcfg.tmp
+sed -i 's/intgw/'$int3gw'/g' netplan/01-netcfg.tmp
+
+
+$CP netplan/01-netcfg.tmp /etc/netplan/01-netcfg.yaml
 $CP dnsmasq/dnsmasq.conf dnsmasq/dnsmasq.tmp
 sed -i 's/int4k/'$int1'/g' dnsmasq/dnsmasq.tmp
 sed -i 's/intwlan/'$int2'/g' dnsmasq/dnsmasq.tmp
@@ -97,7 +104,7 @@ $CP 90-dvb-adapter.rules /etc/udev/rules.d/
 $CP somastart $SOMA_BASE
 ln -s $SOMA_BASE/somastart /usr/bin/somastart
 chmod +x $SOMA_BASE/somastart
-$CP admin/soma-config-backup.sh $SOMA_BASE/admin
+$CP admin/soma-config-backup.sh $SOMA_BASE/admin/
 chmod +x $SOMA_BASE/admin/soma-config-backup.sh
 $CP admin/checkdvb.sh admin/checkdvb.tmp
 sed -i 's/USER/'$TVUSER'/g' admin/checkdvb.tmp
@@ -108,21 +115,21 @@ chmod +x $SOMA_BASE/admin/checkdvb.sh
 echo "" > $LOG
 echo "Initializing SOMA-Installer Logfile in install directory." | tee $LOG
 echo "Install soma weekly backup job, check if crontab file is not patched" | tee $LOG
-if [ $(grep -c "tv-config-backup.sh" /etc/cron.weekly/) -eq 0 ]; then
+if [ ! -f "/etc/cron.weekly/tv-config-backup.sh" ]; then
   echo "Creating crontab file for weekly TV-Backup" >> $LOG
   $CP cron/tv-config-backup.sh /etc/cron.weekly/
 fi
 
 echo "Install soma startup job, check if crontab file is not patched" | tee $LOG
 CRONTAB=/var/spool/cron/crontabs/root
-if [ $(! -f "$CRONTAB") ]; then
+if [ ! -f "$CRONTAB" ]; then
   touch $CRONTAB
 fi
 if [ $(grep -c "somastart" $CRONTAB) -eq 0 ]; then
   echo "Patching crontab file for startup job" >> $LOG
   echo "# Start soma server \n@reboot /usr/bin/somastart" >> $CRONTAB
 fi
-if [ $(! -d "/etc/rc5.d/S90somastart") ]; then
+if [ ! -d "/etc/rc5.d/S90somastart" ]; then
   ln -s /usr/bin/somastart /etc/rc0.d/S90somastart
   ln -s /usr/bin/somastart /etc/rc1.d/S90somastart
   ln -s /usr/bin/somastart /etc/rc2.d/S90somastart
@@ -131,8 +138,6 @@ if [ $(! -d "/etc/rc5.d/S90somastart") ]; then
   ln -s /usr/bin/somastart /etc/rc5.d/S90somastart
   ln -s /usr/bin/somastart /etc/rc6.d/S90somastart
 fi
-# Antique code
-#cp rc.local /etc
 
 echo "Install samba default user, check if userfile is not patched" | tee $LOG
 #if [ $(cat /etc/hosts | grep 10.0.0.1) == "" ]; then
@@ -154,7 +159,7 @@ service smbd restart
 # service hostapd restart
 
 netplan generate; netplan apply
-ufw reload
+ufw enable; ufw reload
 
 # User Info
 echo "Done installing SOMA server. Access the tvheadend Webfrontend at: https://127.0.0.1:9981" | tee $LOG
