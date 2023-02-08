@@ -9,5 +9,5 @@
 # /srv/nfs4/homes  gss/krb5i(rw,sync,no_subtree_check)
 #
 # Export für Tablet Sync und Laptop Sync (nfs statt samba)
-# /media/export/path 10.0.50.0/255.255.255.0(rw,insecure,no_root_squash,async,no_subtree_check,anonuid=1000,anongid=1000)
+# /media/export/path 10.10.50.0/255.255.255.0(rw,insecure,no_root_squash,async,no_subtree_check,anonuid=1000,anongid=1000)
 

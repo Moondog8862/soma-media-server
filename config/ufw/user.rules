@@ -79,62 +79,62 @@
 ### tuple ### allow tcp 9982 0.0.0.0/0 any 0.0.0.0/0 in comment=547668656164656e6420687473702073747265616d696e67
 -A ufw-user-input -p tcp --dport 9982 -j ACCEPT
 
-### tuple ### allow tcp 631 0.0.0.0/0 any 10.0.50.0/24 in
--A ufw-user-input -p tcp --dport 631 -s 10.0.50.0/24 -j ACCEPT
+### tuple ### allow tcp 631 0.0.0.0/0 any 10.10.50.0/24 in
+-A ufw-user-input -p tcp --dport 631 -s 10.10.50.0/24 -j ACCEPT
 
-### tuple ### allow any 631 0.0.0.0/0 any 10.0.0.0/24 in
--A ufw-user-input -p tcp --dport 631 -s 10.0.0.0/24 -j ACCEPT
--A ufw-user-input -p udp --dport 631 -s 10.0.0.0/24 -j ACCEPT
+### tuple ### allow any 631 0.0.0.0/0 any 10.10.0.0/24 in
+-A ufw-user-input -p tcp --dport 631 -s 10.10.0.0/24 -j ACCEPT
+-A ufw-user-input -p udp --dport 631 -s 10.10.0.0/24 -j ACCEPT
 
 ### tuple ### allow tcp 25 0.0.0.0/0 any 0.0.0.0/0 in comment=616c6c6f7720736d7470
 -A ufw-user-input -p tcp --dport 25 -j ACCEPT
 
-### tuple ### allow any 7251 0.0.0.0/0 any 10.0.0.0/24 in
--A ufw-user-input -p tcp --dport 7251 -s 10.0.0.0/24 -j ACCEPT
--A ufw-user-input -p udp --dport 7251 -s 10.0.0.0/24 -j ACCEPT
+### tuple ### allow any 7251 0.0.0.0/0 any 10.10.0.0/24 in
+-A ufw-user-input -p tcp --dport 7251 -s 10.10.0.0/24 -j ACCEPT
+-A ufw-user-input -p udp --dport 7251 -s 10.10.0.0/24 -j ACCEPT
 
 ### tuple ### allow tcp 8080 0.0.0.0/0 any 0.0.0.0/0 in comment=4b6f726520636f6e74726f6c20666f72204b6f6469
 -A ufw-user-input -p tcp --dport 8080 -j ACCEPT
 
-### tuple ### allow any 4000 0.0.0.0/0 any 10.0.50.0/24 in comment=4e46532073746174642073657276696365
--A ufw-user-input -p tcp --dport 4000 -s 10.0.50.0/24 -j ACCEPT
--A ufw-user-input -p udp --dport 4000 -s 10.0.50.0/24 -j ACCEPT
+### tuple ### allow any 4000 0.0.0.0/0 any 10.10.50.0/24 in comment=4e46532073746174642073657276696365
+-A ufw-user-input -p tcp --dport 4000 -s 10.10.50.0/24 -j ACCEPT
+-A ufw-user-input -p udp --dport 4000 -s 10.10.50.0/24 -j ACCEPT
 
-### tuple ### allow any 4001 0.0.0.0/0 any 10.0.50.0/24 in comment=4e4653206c6f636b642073657276696365
--A ufw-user-input -p tcp --dport 4001 -s 10.0.50.0/24 -j ACCEPT
--A ufw-user-input -p udp --dport 4001 -s 10.0.50.0/24 -j ACCEPT
+### tuple ### allow any 4001 0.0.0.0/0 any 10.10.50.0/24 in comment=4e4653206c6f636b642073657276696365
+-A ufw-user-input -p tcp --dport 4001 -s 10.10.50.0/24 -j ACCEPT
+-A ufw-user-input -p udp --dport 4001 -s 10.10.50.0/24 -j ACCEPT
 
-### tuple ### allow any 4002 0.0.0.0/0 any 10.0.50.0/24 in comment=4e4653206d6f756e74642073657276696365
--A ufw-user-input -p tcp --dport 4002 -s 10.0.50.0/24 -j ACCEPT
--A ufw-user-input -p udp --dport 4002 -s 10.0.50.0/24 -j ACCEPT
+### tuple ### allow any 4002 0.0.0.0/0 any 10.10.50.0/24 in comment=4e4653206d6f756e74642073657276696365
+-A ufw-user-input -p tcp --dport 4002 -s 10.10.50.0/24 -j ACCEPT
+-A ufw-user-input -p udp --dport 4002 -s 10.10.50.0/24 -j ACCEPT
 
-### tuple ### allow any 111 0.0.0.0/0 any 10.0.50.0/24 in comment=506f72746d61707065722073657276696365
--A ufw-user-input -p tcp --dport 111 -s 10.0.50.0/24 -j ACCEPT
--A ufw-user-input -p udp --dport 111 -s 10.0.50.0/24 -j ACCEPT
+### tuple ### allow any 111 0.0.0.0/0 any 10.10.50.0/24 in comment=506f72746d61707065722073657276696365
+-A ufw-user-input -p tcp --dport 111 -s 10.10.50.0/24 -j ACCEPT
+-A ufw-user-input -p udp --dport 111 -s 10.10.50.0/24 -j ACCEPT
 
-### tuple ### allow any 2049 0.0.0.0/0 any 10.0.50.0/24 in comment=4e46532073657276696365
--A ufw-user-input -p tcp --dport 2049 -s 10.0.50.0/24 -j ACCEPT
--A ufw-user-input -p udp --dport 2049 -s 10.0.50.0/24 -j ACCEPT
+### tuple ### allow any 2049 0.0.0.0/0 any 10.10.50.0/24 in comment=4e46532073657276696365
+-A ufw-user-input -p tcp --dport 2049 -s 10.10.50.0/24 -j ACCEPT
+-A ufw-user-input -p udp --dport 2049 -s 10.10.50.0/24 -j ACCEPT
 
-### tuple ### allow any 1771 10.0.50.1 any 10.0.50.0/24 in
--A ufw-user-input -p tcp -d 10.0.50.1 --dport 1771 -s 10.0.50.0/24 -j ACCEPT
--A ufw-user-input -p udp -d 10.0.50.1 --dport 1771 -s 10.0.50.0/24 -j ACCEPT
+### tuple ### allow any 1771 10.10.50.1 any 10.10.50.0/24 in
+-A ufw-user-input -p tcp -d 10.10.50.1 --dport 1771 -s 10.10.50.0/24 -j ACCEPT
+-A ufw-user-input -p udp -d 10.10.50.1 --dport 1771 -s 10.10.50.0/24 -j ACCEPT
 
-### tuple ### allow any 2049 0.0.0.0/0 any 10.0.0.0/24 in comment=4e46532073657276696365
--A ufw-user-input -p tcp --dport 2049 -s 10.0.0.0/24 -j ACCEPT
--A ufw-user-input -p udp --dport 2049 -s 10.0.0.0/24 -j ACCEPT
+### tuple ### allow any 2049 0.0.0.0/0 any 10.10.0.0/24 in comment=4e46532073657276696365
+-A ufw-user-input -p tcp --dport 2049 -s 10.10.0.0/24 -j ACCEPT
+-A ufw-user-input -p udp --dport 2049 -s 10.10.0.0/24 -j ACCEPT
 
-### tuple ### allow any 2222 10.220.50.216 any 10.0.50.0/24 in
--A ufw-user-input -p tcp -d 10.220.50.216 --dport 2222 -s 10.0.50.0/24 -j ACCEPT
--A ufw-user-input -p udp -d 10.220.50.216 --dport 2222 -s 10.0.50.0/24 -j ACCEPT
+### tuple ### allow any 2222 10.220.50.216 any 10.10.50.0/24 in
+-A ufw-user-input -p tcp -d 10.220.50.216 --dport 2222 -s 10.10.50.0/24 -j ACCEPT
+-A ufw-user-input -p udp -d 10.220.50.216 --dport 2222 -s 10.10.50.0/24 -j ACCEPT
 
-### tuple ### allow any 2222 10.0.50.1 any 10.0.50.0/24 in
--A ufw-user-input -p tcp -d 10.0.50.1 --dport 2222 -s 10.0.50.0/24 -j ACCEPT
--A ufw-user-input -p udp -d 10.0.50.1 --dport 2222 -s 10.0.50.0/24 -j ACCEPT
+### tuple ### allow any 2222 10.10.50.1 any 10.10.50.0/24 in
+-A ufw-user-input -p tcp -d 10.10.50.1 --dport 2222 -s 10.10.50.0/24 -j ACCEPT
+-A ufw-user-input -p udp -d 10.10.50.1 --dport 2222 -s 10.10.50.0/24 -j ACCEPT
 
-### tuple ### allow any 2222 10.0.50.1 any 10.0.0.0/24 in
--A ufw-user-input -p tcp -d 10.0.50.1 --dport 2222 -s 10.0.0.0/24 -j ACCEPT
--A ufw-user-input -p udp -d 10.0.50.1 --dport 2222 -s 10.0.0.0/24 -j ACCEPT
+### tuple ### allow any 2222 10.10.50.1 any 10.10.0.0/24 in
+-A ufw-user-input -p tcp -d 10.10.50.1 --dport 2222 -s 10.10.0.0/24 -j ACCEPT
+-A ufw-user-input -p udp -d 10.10.50.1 --dport 2222 -s 10.10.0.0/24 -j ACCEPT
 
 ### tuple ### allow tcp 853 0.0.0.0/0 any 0.0.0.0/0 in comment=616c6c6f7720656e6372797074656420646e73207265717565737473
 -A ufw-user-input -p tcp --dport 853 -j ACCEPT

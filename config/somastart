@@ -46,8 +46,8 @@ $SOMA_BASE/admin/checkdvb.sh
 #modprobe rtl8192ce ant_sel=1
 
 # FW/UFW DNS ERROR
-# [UFW BLOCK] IN=enp3s0 OUT= MAC=e0:3f:49:81:af:13:00:50:b6:d7:fd:9e:08:00 SRC=10.0.50.122
-# DST=10.0.50.1 LEN=57 TOS=0x00 PREC=0x00 TTL=128 ID=5574 PROTO=UDP SPT=62515 DPT=53
+# [UFW BLOCK] IN=enp3s0 OUT= MAC=e0:3f:49:81:af:13:00:50:b6:d7:fd:9e:08:00 SRC=10.10.50.122
+# DST=10.10.50.1 LEN=57 TOS=0x00 PREC=0x00 TTL=128 ID=5574 PROTO=UDP SPT=62515 DPT=53
 #ufw allow 53/tcp comment "allow dns requests"
 #ufw allow 53/udp comment "allow dns requests"
 # check
@@ -70,11 +70,11 @@ $SOMA_BASE/admin/checkdvb.sh
 ## UNSOLVED Unnecessary route is bein inserted blocking wifi traffic!
 ### Check and debug where route is bein added rather than deleting it!
 # To avoid mobile clients not to be able to connect
-if [ $(route -n | grep -c "10.0.0.0") -gt 1 ]; then
+if [ $(route -n | grep -c "10.10.0.0") -gt 1 ]; then
   echo "Deleting route for enp3s0 network..."
-  sudo route del -net 10.0.0.0/24 enp3s0
+  sudo route del -net 10.10.0.0/24 enp3s0
 else
-  echo "No route on enp3s0 to 10.0.0.0 - OK!"
+  echo "No route on enp3s0 to 10.10.0.0 - OK!"
 fi
 
 # Refresh FW Rules
