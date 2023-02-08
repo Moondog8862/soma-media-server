@@ -162,6 +162,11 @@ netplan generate; netplan apply
 ufw enable; ufw reload
 
 # User Info
-echo "Done installing SOMA server. Access the tvheadend Webfrontend at: https://127.0.0.1:9981" | tee $LOG
-echo "Done installing SOMA server. Access the tvheadend Webfrontend at: https://access.fiber.lan:9981" | tee $LOG
+echo "Done installing SOMA server. Please access the tvheadend Webfrontend at one of the following locations:" http://127.0.0.1:9981" | tee $LOG
+echo "From local machine: http://127.0.0.1:9981\n http://access.fiber.lan:9981" | tee $LOG
+echo "From network: http://10.0.50.1:9981" | tee $LOG
+echo "Notice for configuring tvheadend:" | tee $LOG
+echo "Configuration options for installer:\n -- Allowed network: 10.0.50.0/24" | tee $LOG
+echo "Access the fileshares with the server ip 10.0.50.1 with a client from within this network or from the wireless network 10.0.0.1" | tee $LOG
 echo "Change passwords for default users. user Login: admin / admin" | tee $LOG
+
