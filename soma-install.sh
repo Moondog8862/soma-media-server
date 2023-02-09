@@ -8,6 +8,14 @@
 CP=/bin/cp
 MKDIR=/bin/mkdir
 
+# Start installer note
+echo "Starting soma installer... installing required dependencies"
+echo "Please note the prerequisites in the Readme file"
+echo "https://github.com/Moondog8862/soma-media-server/blob/main/README.md"
+echo "Please be careful to install on a configured system as it will overwrite existing IP addresses and networks with the new configuration."
+echo "Press ANY KEY to start the installation"
+read enter
+
 # Creating soma-script-and-backup-folder
 SOMA_BASE=/var/lib/soma
 # rm -rf $SOMA_BASE
@@ -68,9 +76,9 @@ read wifipass
 $CP hostapd/* /etc/hostapd/
 $CP netplan/01-netcfg.yaml netplan/01-netcfg.tmp
 sed -i 's/int4k/'$int1'/g' netplan/01-netcfg.tmp
-sed -i 's/intwifi/'$int2'/g' netplan/01-netcfg.tmp
 sed -i 's/intgw/'$int3gw'/g' netplan/01-netcfg.tmp
 $CP netplan/01-netcfg.tmp /etc/netplan/01-netcfg.yaml
+rm /etc/netplan/01-network-manager-all.yaml
 $CP dnsmasq/dnsmasq.conf dnsmasq/dnsmasq.tmp
 sed -i 's/int4k/'$int1'/g' dnsmasq/dnsmasq.tmp
 sed -i 's/intwlan/'$int2'/g' dnsmasq/dnsmasq.tmp
@@ -139,16 +147,16 @@ if [ ! -d "/etc/rc5.d/S90somastart" ]; then
 fi
 
 echo "Install samba default user, check if userfile is not patched" | tee $LOG
-#if [ $(cat /etc/hosts | grep 10.10.0.1) == "" ]; then
+#if [ $(cat /etc/hosts | grep 10.0.0.1) == "" ]; then
 #  echo " " >> /etc/samba/smbpasswd
 #fi
 
 echo "Install dns entries, check if hosts file is not patched" | tee $LOG
-if [ $(grep -c "10.10.0.1" /etc/hosts) -eq 0 ]; then
+if [ $(grep -c "10.0.0.1" /etc/hosts) -eq 0 ]; then
   echo "Patching hosts file for dns entry of networks" >> $LOG
   echo "# Subnet addresses" >> /etc/hosts
-  echo "10.10.0.1        access.wifi.lan" >> /etc/hosts
-  echo "10.10.50.1       access.fiber.lan" >> /etc/hosts
+  echo "10.0.0.1        access.wifi.lan" >> /etc/hosts
+  echo "10.0.50.1       access.fiber.lan" >> /etc/hosts
 fi
 
 # Restarting system services
@@ -161,11 +169,11 @@ netplan generate; netplan apply
 ufw enable; ufw reload
 
 # User Info
-echo "Done installing SOMA server. Please access the tvheadend Webfrontend at one of the following locations:" http://127.0.0.1:9981" | tee $LOG
+echo "Done installing SOMA server. Please access the tvheadend Webfrontend at one of the following locations:" | tee $LOG
 echo "From local machine: http://127.0.0.1:9981\n http://access.fiber.lan:9981" | tee $LOG
-echo "From network: http://10.10.50.1:9981" | tee $LOG
+echo "From network: http://10.0.50.1:9981" | tee $LOG
 echo "Notice for configuring tvheadend:" | tee $LOG
-echo "Configuration options for installer:\n -- Allowed network: 10.10.50.0/24" | tee $LOG
-echo "Access the fileshares with the server ip 10.10.50.1 with a client from within this network or from the wireless network 10.10.0.1" | tee $LOG
+echo "Configuration options for installer:\n -- Allowed network: 10.0.50.0/24" | tee $LOG
+echo "Access the fileshares with the server ip 10.0.50.1 with a client from within this network or from the wireless network 10.0.0.1" | tee $LOG
 echo "Change passwords for default users. user Login: admin / admin" | tee $LOG
 
