@@ -2,10 +2,20 @@
 small office media server appliance SOMA
 
 ****************************
-Installs and configures a tv-tuner, mediaserver and file server with 2 networks (10.10.0.0/24 and 10.10.50.0/24)
+Installs and configures a tv-tuner, mediaserver and file server with 2 networks (10.0.0.0/24 and 10.0.50.0/24)
 After setup, Kodi can be used on any device in the network to stream live-tv, movies and pictures from the central tvheadend server.
 
 Requirements
+- Hardware (minimum, please report your working hardware configuration for reference database)
+
+1 CPU, same or newer Intel(R) Core(TM) i5-4570S CPU @ 2.90GHz
+2 GB RAM
+
+1 physical LAN adapter 
+1 wireless adapter
+1 TV tuner card (or usb tv-tuner)
+
+- Software
 
 OS
 Distributor ID:	elementary
