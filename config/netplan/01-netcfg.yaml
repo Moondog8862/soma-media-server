@@ -14,6 +14,9 @@ network:
       dhcp4: no
       dhcp6: no
       addresses: [ 10.10.50.1/24, 10.50.50.1/24 ]
+      routes:
+      - to: 10.10.50.0/24
+        via: intgw
       nameservers:
               search: [access.fiber.lan]
               addresses: [127.0.0.1,intgw]
